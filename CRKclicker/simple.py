@@ -3,7 +3,7 @@ import pyautogui
 from pynput import mouse, keyboard
 
 click_positions = []
-click_delay = 1.0  # Set delay between clicks (in seconds)
+click_delay = 30.0  # Set delay between clicks (in seconds)
 initial_delay = 10.0  # Delay before clicks can be registered
 stop_flag = False
 
