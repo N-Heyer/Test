@@ -10,7 +10,7 @@ def on_click(x, y, button, pressed):
     if pressed:
         click_positions.append((x, y))
         print(f"Point added: {x}, {y}")
-        if len(click_positions) >= 5:  # Stop after 5 points (adjust as needed)
+        if len(click_positions) >= 2:  # Stop after 5 points (adjust as needed)
             return False  # Stop listener
 
 
