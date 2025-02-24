@@ -10,23 +10,23 @@ stop_flag = False
 def on_click(x, y, button, pressed):
     if pressed:
         click_positions.append((x, y))
-        print(f"Point added: {x}, {y}")
-        if len(click_positions) >= 2:  # Stop after 5 points (adjust as needed)
+        print(f"Point added: {x}, {y}") # shows the coords of your click 
+        if len(click_positions) >= 2:  # Stop after X amount of points (adjust as needed)
             return False  # Stop listener
 
-def on_press(key):
+def on_press(key): # stops program using ESC
     global stop_flag
     if key == keyboard.Key.esc:
         stop_flag = True
         return False
 
-def get_click_positions():
+def get_click_positions(): # gets x and y positions of X clicks
     print(f"Waiting {initial_delay} seconds before registering clicks...")
-    time.sleep(initial_delay)
+    time.sleep(initial_delay) # calls the sleep func to wait so you can access your application
     print("You can now click on the points you want to be clicked.")
-    with mouse.Listener(on_click=on_click) as listener:
+    with mouse.Listener(on_click=on_click) as listener: 
         listener.join()
-    print("Selected points:", click_positions)
+    print("Selected points:", click_positions) 
 
 def auto_clicker():
     global stop_flag
@@ -38,9 +38,9 @@ def auto_clicker():
                 for pos in click_positions:
                     if stop_flag:
                         break
-                    pyautogui.click(pos[0], pos[1])
+                    pyautogui.click(pos[0], pos[1]) 
                     print(f"Clicked: {pos}")
-                    time.sleep(click_delay)
+                    time.sleep(click_delay) # delay after each click
         except KeyboardInterrupt:
             pass
         finally:
