@@ -1,56 +1,57 @@
 import pyautogui
 import time
 import sys
-import Quartz
 import threading
+from AppKit import NSEvent
+import Quartz
 
 click_points = []  # Stores saved click positions
 start_clicking = False  # Flag to start auto-clicking
 
-def key_callback(proxy, event_type, event, refcon):
-    """Handles keypress events using Quartz."""
-    global start_clicking
-    key_code = Quartz.CGEventGetIntegerValueField(event, Quartz.kCGKeyboardEventKeycode)
-
-    # macOS Key Codes: 35 = 'p', 1 = 's', 12 = 'q'
-    if key_code == 35:  # 'p' Key
-        x, y = pyautogui.position()
-        click_points.append((x, y))
-        print(f"\nAdded point: {x}, {y}")
-
-    elif key_code == 1:  # 's' Key
-        if not click_points:
-            print("\nNo points selected! Add at least one point.")
-        else:
-            print("\nStarting auto-clicker...")
-            start_clicking = True
-            return None  # Stop key listener
-
-    elif key_code == 12:  # 'q' Key
-        print("\nExiting...")
-        sys.exit()
-
-    return event
-
 def listen_for_keys():
-    """Listens for keypress events on macOS using Quartz."""
+    """Listens for keypress events using NSEvent (macOS-native)."""
+    global start_clicking
+
     print("\nMove your cursor to a position and press 'p' to save it.")
     print("Press 's' to start auto-clicking, or 'q' to quit.")
 
-    event_mask = Quartz.kCGEventKeyDown
-    tap = Quartz.CGEventTapCreate(
-        Quartz.kCGSessionEventTap,
-        Quartz.kCGHeadInsertEventTap,
-        Quartz.kCGEventTapOptionDefault,
-        event_mask,
-        key_callback,
-        None
-    )
+    while True:
+        event = NSEvent.keyEventWithType_location_modifierFlags_timestamp_windowNumber_context_characters_charactersIgnoringModifiers_isARepeat_keyCode_(
+            Quartz.kCGEventKeyDown,
+            (0, 0),
+            0,
+            0,
+            0,
+            None,
+            None,
+            None,
+            False,
+            0,
+        )
 
-    run_loop_source = Quartz.CFMachPortCreateRunLoopSource(None, tap, 0)
-    Quartz.CFRunLoopAddSource(Quartz.CFRunLoopGetCurrent(), run_loop_source, Quartz.kCFRunLoopCommonModes)
-    Quartz.CGEventTapEnable(tap, True)
-    Quartz.CFRunLoopRun()
+        if not event:
+            continue
+
+        key_pressed = event.charactersIgnoringModifiers()
+
+        if key_pressed == "p":  # Save cursor position
+            x, y = pyautogui.position()
+            click_points.append((x, y))
+            print(f"\nAdded point: {x}, {y}")
+
+        elif key_pressed == "s":  # Start auto-clicking
+            if not click_points:
+                print("\nNo points selected! Add at least one point.")
+            else:
+                print("\nStarting auto-clicker...")
+                start_clicking = True
+                break  # Exit key listener
+
+        elif key_pressed == "q":  # Quit the script
+            print("\nExiting...")
+            sys.exit()
+
+        time.sleep(0.1)
 
 def auto_clicker():
     """Clicks at saved locations until 'q' is pressed."""
@@ -60,9 +61,8 @@ def auto_clicker():
         for x, y in click_points:
             pyautogui.click(x, y)
             time.sleep(0.1)
-        
-        # Stop if 'q' is pressed
-        if start_clicking is False:
+
+        if not start_clicking:
             break
 
 if __name__ == "__main__":
