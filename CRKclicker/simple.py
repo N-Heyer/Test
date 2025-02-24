@@ -4,7 +4,7 @@ from pynput import mouse, keyboard
 
 click_positions = []
 click_delay = 1.0  # Set delay between clicks (in seconds)
-initial_delay = 30.0  # Delay before first click starts
+initial_delay = 10.0  # Delay before clicks can be registered
 stop_flag = False
 
 def on_click(x, y, button, pressed):
@@ -21,16 +21,16 @@ def on_press(key):
         return False
 
 def get_click_positions():
-    print("Click on the points you want to be clicked, then close the window.")
+    print(f"Waiting {initial_delay} seconds before registering clicks...")
+    time.sleep(initial_delay)
+    print("You can now click on the points you want to be clicked.")
     with mouse.Listener(on_click=on_click) as listener:
         listener.join()
     print("Selected points:", click_positions)
 
 def auto_clicker():
     global stop_flag
-    print(f"Starting auto clicker in {initial_delay} seconds... Press ESC to stop.")
-    time.sleep(initial_delay)
-    print("Auto clicker started!")
+    print("Starting auto clicker... Press ESC to stop.")
     
     with keyboard.Listener(on_press=on_press) as listener:
         try:
