@@ -1,5 +1,5 @@
 import pyautogui
-import keyboard
+from pynput import keyboard
 import time
 
 # List to store click points
