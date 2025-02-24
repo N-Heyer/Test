@@ -4,7 +4,7 @@ from pynput import mouse, keyboard
 
 click_positions = []
 click_delay = 1.0  # Set delay between clicks (in seconds)
-initial_delay = 3.0  # Delay before first click starts
+initial_delay = 30.0  # Delay before first click starts
 stop_flag = False
 
 def on_click(x, y, button, pressed):
