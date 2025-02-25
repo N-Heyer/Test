@@ -85,10 +85,10 @@ Thread(target=listen_for_esc, daemon=True).start()
 # GUI Setup
 root = tk.Tk()
 root.title("Auto Clicker")
-root.geometry("400x300")
+root.geometry("500x400")
 
-tk.Label(root, text="Auto Clicker GUI", font=("Arial", 14)).pack()
-status_label = tk.Label(root, text="Waiting to start...", font=("Arial", 10))
+tk.Label(root, text="Auto Clicker GUI", font=("Arial", 16)).pack()
+status_label = tk.Label(root, text="Waiting to start...", font=("Arialß", 10))
 status_label.pack()
 
 listbox = tk.Listbox(root, height=8)
