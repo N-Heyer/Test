@@ -1,0 +1,18 @@
+EMAIL Boss,Finish the report,04-15-2023
+EMAIL Peer,Schedule meeting,04-14-2023
+EMAIL Subordinate,Update status,04-13-2023
+EMAIL ImportantPerson,Review proposal,04-10-2023
+EMAIL OtherPerson,Party invitation,04-12-2023
+COUNT
+NEXT
+READ
+NEXT
+READ
+NEXT
+READ
+COUNT
+NEXT
+READ
+NEXT
+READ
+COUNT
