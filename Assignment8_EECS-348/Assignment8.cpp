@@ -1,3 +1,15 @@
+/*
+Author: Nick Heyer
+KUID: 3142337
+Date: 5/8/25
+Lab: Assignment8
+Last modified: 5/8/25
+EECS 348 Assignment 8
+CHATGPT BUG FIXES
+input: Assignment_Test_file.txt
+Output:Email priority queue from ASS5 
+Collaborators: 
+*/
 #include <iostream>
 #include <vector>
 #include <string>
